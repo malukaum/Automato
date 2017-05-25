@@ -243,22 +243,20 @@ public class Automato {
         double yl = 150.0;
 
         Iterator<Estado> itEstado = estados.iterator();
-        while (itEstado.hasNext()){
+        while (itEstado.hasNext()) {
             Estado estadoAux;
             estadoAux = itEstado.next();
-            Element estado= new Element("state");
+            Element estado = new Element("state");
             Attribute id = new Attribute("id", Integer.toString(estadoAux.getId()));
             Attribute name = new Attribute("name", "q" + Integer.toString(estadoAux.getId()));
             estado.setAttribute(id);
             estado.setAttribute(name);
-
             Element x = new Element("x");
             Element y = new Element("y");
             x.setText(Double.toString(xl));
             y.setText(Double.toString(yl));
             estado.addContent(x);
             estado.addContent(y);
-
             if (estadoAux.ehInicial()) {
                 Element inicial = new Element("initial");
                 estado.addContent(inicial);
@@ -267,12 +265,10 @@ public class Automato {
                 Element eFinal = new Element("final");
                 estado.addContent(eFinal);
             }
-
             automato.addContent(estado);
             xl += 75;
             yl += 50;
         }
-        
         Iterator<Transicao> itTransicao = transicoes.iterator();
         while (itTransicao.hasNext()) {
             Transicao transicao = (Transicao) itTransicao.next();
@@ -280,19 +276,15 @@ public class Automato {
             Element origem = new Element("from");
             Element destino = new Element("to");
             Element valor = new Element("read");
-
             origem.setText(String.valueOf(transicao.getOrigem()));
             destino.setText(String.valueOf(transicao.getDestino()));
             valor.setText(Character.toString(transicao.getValor()));
             elemTransicao.addContent(origem);
             elemTransicao.addContent(destino);
             elemTransicao.addContent(valor);
-
             automato.addContent(elemTransicao);
         }
-
         documento.setRootElement(raiz);
-
         XMLOutputter saidaXML = new XMLOutputter();
         OutputStream saida = new FileOutputStream(new File(caminhoSaida));
         saidaXML.output(documento, saida);
